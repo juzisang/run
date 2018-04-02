@@ -1,5 +1,4 @@
 const shelljs = require('shelljs')
-const webpack = require('webpack')
 const log = require('./../../util/log')
 const ModernBase = require('../../core/base/ModernBase')
 const generate = require('./conf/generateWebpack')
@@ -14,6 +13,7 @@ class VueDev extends ModernBase {
   }
 
   onStart (config) {
+    const webpack = require('webpack')
     const compiler = webpack(generate(config, false))
     return new Promise((resolve, reject) => {
       compiler.run((err, stats) => {

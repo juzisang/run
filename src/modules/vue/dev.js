@@ -1,7 +1,5 @@
 const shelljs = require('shelljs')
 const path = require('path')
-const devServer = require('webpack-dev-server')
-const webpack = require('webpack')
 const log = require('./../../util/log')
 const ModernBase = require('../../core/base/ModernBase')
 const generate = require('./conf/generateWebpack')
@@ -16,6 +14,8 @@ class VueDev extends ModernBase {
   }
 
   onStart (config) {
+    const devServer = require('webpack-dev-server')
+    const webpack = require('webpack')
     const compiler = webpack(generate(config, true))
     const serverConf = {
       hot: true,
