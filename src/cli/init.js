@@ -6,7 +6,8 @@ const bind = require('./onBind')
 module.exports = function () {
 
   const config = util.getModernConfig()
-  const modern = loadModule(config.type)
+  const Module = loadModule(config.type)
+  const modern = new Module()
 
   /**
    * 开始

@@ -1,6 +1,4 @@
 const shelljs = require('shelljs')
-const path = require('path')
-const devServer = require('webpack-dev-server')
 const webpack = require('webpack')
 const log = require('./../../util/log')
 const ModernBase = require('../../core/base/ModernBase')
@@ -9,14 +7,14 @@ const generate = require('./conf/generateWebpack')
 class VueDev extends ModernBase {
   onBind (config) {
     log.info('loading dependencies')
-    shelljs.exec('npm install', {
+    shelljs.exec('npm install --loglevel silent', {
       cwd: __dirname
     })
     log.info('loading dependencies completed')
   }
 
   onStart (config) {
-    const compiler = webpack(generate(config, true))
+    const compiler = webpack(generate(config, false))
     return new Promise((resolve, reject) => {
       compiler.run((err, stats) => {
         if (err) {
