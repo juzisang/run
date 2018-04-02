@@ -3,6 +3,7 @@ const path = require('path')
 const log = require('./../../util/log')
 const ModernBase = require('../../core/base/ModernBase')
 const generate = require('./conf/generateWebpack')
+const getPort = require('get-port')
 
 class VueDev extends ModernBase {
   onBind (config) {
@@ -29,7 +30,12 @@ class VueDev extends ModernBase {
       compress: true,
       quiet: true
     }
-    return new Promise((resolve, reject) => new devServer(compiler, serverConf).listen(config.devPort, '::', (err) => err ? reject(err) : resolve()))
+    return getPort({port: config.devPort})
+      .then((port) => {
+        config.devPort = port
+        return config
+      })
+      .then(config => new Promise((resolve, reject) => new devServer(compiler, serverConf).listen(config.devPort, '::', (err) => err ? reject(err) : resolve())))
   }
 
   onRun (config) {

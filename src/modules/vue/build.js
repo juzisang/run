@@ -20,7 +20,7 @@ class VueDev extends ModernBase {
         if (err) {
           return reject(err)
         }
-        logWebpack(stats)
+        this.logWebpack(stats)
         resolve(stats)
       })
     })
