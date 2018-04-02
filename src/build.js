@@ -32,7 +32,10 @@ module.exports = function () {
     return config
   }
 
-  function runDev (config) {
+  /**
+   * 开始build
+   */
+  function runBuild (config) {
     const compiler = webpack(generateWebpack(config.type, false))
     compiler.run((err, stats) => {
       if (err) {
@@ -70,7 +73,7 @@ module.exports = function () {
   startRun()
     .then(getConfig)
     .then(installModule)
-    .then(runDev)
+    .then(runBuild)
     .catch(err => log.error(err.message || err))
 }
 

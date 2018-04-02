@@ -38,6 +38,9 @@ module.exports = function () {
     return config
   }
 
+  /**
+   * 运行
+   */
   function runDev (config) {
     const compiler = webpack(generateWebpack(config.type, true))
     const serverConf = {
