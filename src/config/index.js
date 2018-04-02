@@ -1,14 +1,16 @@
 const assignDeep = require('object-assign-deep')
-const path = require('path')
-const defaultConfig = require('default')
-const cwd = process.cwd()
-const mergeConfig = {}
+const fs = require('fs')
+const util = require('../util/util')
+const defaultConfig = require('./default')
 
-try {
-  const modernConfig = require(path.join(cwd, 'modern.js'))
-  assignDeep(mergeConfig, defaultConfig, modernConfig)
-} catch (e) {
-  assignDeep(mergeConfig, defaultConfig)
+module.exports = function () {
+  if (fs.existsSync(util.cwdPath('modern.js'))) {
+    const modernConfig = require(util.cwdPath('modern.js'))
+    return assignDeep({}, defaultConfig, modernConfig)
+  } else if (fs.existsSync(util.cwdPath('package.json'))) {
+    const modernConfig = require(util.cwdPath('package.json')).modern
+    return assignDeep({}, defaultConfig, modernConfig)
+  } else {
+    return assignDeep({}, defaultConfig)
+  }
 }
-
-module.exports = mergeConfig

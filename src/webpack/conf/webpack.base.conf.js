@@ -16,8 +16,7 @@ module.exports = {
   },
   output: {
     path: cwdPath('./dist'),
-    filename: '[name].js',
-    publicPath: '/'
+    filename: '[name].bundle.js'
   },
   resolve: {
     extensions: ['.js', '.vue', '.json', '.jsx'],
@@ -31,11 +30,6 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        include: [cwdPath('src')]
-      },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
