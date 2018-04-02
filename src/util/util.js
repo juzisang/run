@@ -9,7 +9,7 @@ function getGlobalNodeModulesPath () {
 }
 
 function getModernConfig (config) {
-  return require('../config')(config)
+  return require('../core/config')(config)
 }
 
 function cwdPath (url) {

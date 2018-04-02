@@ -6,5 +6,6 @@ dist
 tmp
 coverage
 npm-debug.log
-/.idea
+.idea
 package-lock.json
+cache.config.json

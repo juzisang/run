@@ -2,7 +2,7 @@
 const cmd = require('commander')
 
 function exec (command, ...args) {
-  require('../src')[command](...args)
+  require('../src/cli')[command](...args)
 }
 
 cmd.version(require('../package.json').version, '-v, --version')

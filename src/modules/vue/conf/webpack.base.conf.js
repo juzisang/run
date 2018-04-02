@@ -1,11 +1,14 @@
 'use strict'
-const util = require('../../util/util')
+const util = require('../../../util/util')
+const path = require('path')
 
 const cwdPath = util.cwdPath
 
 const modules = [
   // 当前工作目录下
   cwdPath('./node_modules'),
+  // 项目依赖
+  path.resolve(__dirname, '../../../../node_modules'),
   // 全局npm包
   util.getGlobalNodeModulesPath()
 ]

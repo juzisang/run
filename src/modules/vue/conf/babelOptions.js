@@ -1,7 +1,7 @@
 const path = require('path')
 
 function moduleLoader (name) {
-  return path.resolve(__dirname, '../../../modules/vue/node_modules', name)
+  return path.resolve(__dirname, '../node_modules', name)
 }
 
 module.exports = function () {
