@@ -3,10 +3,9 @@ const fs = require('fs')
 const path = require('path')
 const bind = require('./onBind')
 
-module.exports = function () {
-
+module.exports = function (arge) {
   const config = util.getModernConfig()
-  const Module = loadModule(config.type)
+  const Module = loadModule(arge[0])
   const modern = new Module()
 
   /**
@@ -20,6 +19,12 @@ module.exports = function () {
    * 加载模块
    */
   function loadModule (type) {
+    if (!type || (typeof type) !== 'string') {
+      throw new Error('template does not exist')
+    }
+    if (!fs.readdirSync(path.resolve(__dirname, '../modules')).find(name => name === type)) {
+      throw new Error(type + ' template does not exist')
+    }
     return require('../modules/' + type).init
   }
 
@@ -27,5 +32,5 @@ module.exports = function () {
     .then(() => bind(config, modern))
     .then(() => modern.onStart(config))
     .then(() => modern.onRun(config))
-    .catch(() => modern.onError(config))
+    .catch((err) => modern.onError(err))
 }
