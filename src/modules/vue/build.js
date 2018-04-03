@@ -1,7 +1,7 @@
 const shelljs = require('shelljs')
 const log = require('./../../util/log')
 const ModernBase = require('../../core/base/ModernBase')
-const generate = require('./conf/generateWebpack')
+const generate = require('./conf/generate')
 
 class VueDev extends ModernBase {
   onBind (config) {

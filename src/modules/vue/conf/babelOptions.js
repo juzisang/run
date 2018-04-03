@@ -10,10 +10,10 @@ module.exports = function () {
     forceEnv: true,
     presets: [moduleLoader('babel-preset-env')],
     plugins: [
-      moduleLoader('babel-plugin-syntax-dynamic-import'),
       moduleLoader('babel-plugin-transform-runtime'),
       moduleLoader('babel-plugin-transform-vue-jsx'),
-      moduleLoader('babel-plugin-transform-object-rest-spread')
+      // moduleLoader('babel-plugin-syntax-dynamic-import'),
+      // moduleLoader('babel-plugin-transform-object-rest-spread')
     ],
     cacheDirectory: true
   }

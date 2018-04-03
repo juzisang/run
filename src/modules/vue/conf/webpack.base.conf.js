@@ -1,12 +1,15 @@
 'use strict'
 const util = require('../../../util/util')
 const path = require('path')
+const babelOptions = require('./babelOptions')()
 
 const cwdPath = util.cwdPath
 
 const modules = [
   // 当前工作目录下
   cwdPath('./node_modules'),
+  // 当前模版的依赖
+  path.resolve(__dirname, '../node_modules'),
   // 项目依赖
   path.resolve(__dirname, '../../../../node_modules'),
   // 全局npm包
@@ -14,6 +17,7 @@ const modules = [
 ]
 
 module.exports = {
+  context: util.cwdPath('./'),
   entry: {
     app: cwdPath('index.js')
   },
@@ -56,7 +60,23 @@ module.exports = {
           limit: 10000,
           name: 'static/fonts/[name].[hash:7].[ext]'
         }
-      }
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        options: {
+          loaders: {
+            css: 'vue-style-loader!css-loader',
+            js: {loader: 'babel-loader', options: babelOptions}
+          }
+        }
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        options: babelOptions
+      },
     ]
   },
   node: {

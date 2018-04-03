@@ -2,7 +2,7 @@ const shelljs = require('shelljs')
 const path = require('path')
 const log = require('./../../util/log')
 const ModernBase = require('../../core/base/ModernBase')
-const generate = require('./conf/generateWebpack')
+const generate = require('./conf/generate')
 const getPort = require('get-port')
 
 class VueDev extends ModernBase {
@@ -31,11 +31,8 @@ class VueDev extends ModernBase {
       quiet: true
     }
     return getPort({port: config.devPort})
-      .then((port) => {
-        config.devPort = port
-        return config
-      })
-      .then(config => new Promise((resolve, reject) => new devServer(compiler, serverConf).listen(config.devPort, '::', (err) => err ? reject(err) : resolve())))
+      .then((port) => config.devPort = port)
+      .then(() => new Promise((resolve, reject) => new devServer(compiler, serverConf).listen(config.devPort, '::', (err) => err ? reject(err) : resolve())))
   }
 
   onRun (config) {
