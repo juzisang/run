@@ -2,6 +2,7 @@ const shelljs = require('shelljs')
 const log = require('./../../util/log')
 const ModernBase = require('../../core/base/ModernBase')
 const generate = require('./conf/generate')
+const ora = require('ora')
 
 class VueDev extends ModernBase {
   onBind (config) {
@@ -15,8 +16,11 @@ class VueDev extends ModernBase {
   onStart (config) {
     const webpack = require('webpack')
     const compiler = webpack(generate(config, false))
+    const spinner = ora('building for production...')
     return new Promise((resolve, reject) => {
+      spinner.start()
       compiler.run((err, stats) => {
+        spinner.stop()
         if (err) {
           return reject(err)
         }
@@ -31,7 +35,7 @@ class VueDev extends ModernBase {
   }
 
   onError (err) {
-    log.error(err)
+    log.error(JSON.stringify(err))
   }
 
   logWebpack (stats) {

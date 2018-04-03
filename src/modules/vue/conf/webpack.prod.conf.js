@@ -3,7 +3,6 @@ const merge = require('webpack-merge')
 const webpack = require('webpack')
 const util = require('../../../util/util')
 const baseWebpackConfig = require('./../conf/webpack.base.conf')
-const babelOptions = require('./babelOptions')()
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
@@ -16,11 +15,12 @@ module.exports = function (modernConf) {
       app: util.cwdPath(modernConf.main)
     },
     output: {
-      path: util.cwdPath('./dist'),
-      filename: 'static/js/[name].[chunkhash].js',
-      chunkFilename: 'static/js/[id].[chunkhash].js'
+      path: modernConf.vue.assetsRoot,
+      filename: path.posix.join(modernConf.vue.assetsSubDirectory, 'js/[name].[chunkhash].js'),
+      chunkFilename: path.posix.join(modernConf.vue.assetsSubDirectory, 'js/[id].[chunkhash].js'),
+      publicPath: modernConf.vue.assetsPublicPath
     },
-    devtool: '#source-map',
+    devtool: modernConf.vue.devtool,
     plugins: [
       new webpack.DefinePlugin({
         'process.env': {
@@ -33,15 +33,15 @@ module.exports = function (modernConf) {
             warnings: false
           }
         },
-        sourceMap: true,
+        sourceMap: modernConf.vue.sourceMap,
         parallel: true
       }),
       new ExtractTextPlugin({
-        filename: 'static/css/[name].[contenthash].css',
+        filename: path.posix.join(modernConf.vue.assetsSubDirectory, 'css/[name].[contenthash].css'),
         allChunks: true,
       }),
       new OptimizeCSSPlugin({
-        cssProcessorOptions: {safe: true, map: {inline: false}}
+        cssProcessorOptions: modernConf.vue.sourceMap ? {safe: true, map: {inline: false}} : {safe: true}
       }),
       new HtmlWebpackPlugin({
         inject: true,
@@ -85,7 +85,7 @@ module.exports = function (modernConf) {
       new CopyWebpackPlugin([
         {
           from: util.cwdPath('./static'),
-          to: 'static',
+          to: modernConf.vue.assetsSubDirectory,
           ignore: ['.*']
         }
       ])

@@ -4,13 +4,17 @@ const util = require('../../../util/util')
 const baseWebpackConfig = require('./../conf/webpack.base.conf')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 module.exports = function (modernConf) {
   return merge(baseWebpackConfig, {
     entry: util.parseEntry(modernConf, {
       app: util.cwdPath(modernConf.main)
     }),
-    devtool: 'cheap-module-eval-source-map',
+    output: {
+      publicPath: modernConf.vue.assetsPublicPath
+    },
+    devtool: modernConf.vue.devtool,
     plugins: [
       new webpack.DefinePlugin({
         'process.env': {
@@ -31,7 +35,13 @@ module.exports = function (modernConf) {
           to: 'static',
           ignore: ['.*']
         }
-      ])
+      ]),
+      new FriendlyErrorsPlugin({
+        compilationSuccessInfo: {
+          messages: [`Your application is running here: http://localhost:${modernConf.devPort}`],
+        },
+        onErrors: undefined
+      })
     ]
   })
 }

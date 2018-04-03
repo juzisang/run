@@ -27,5 +27,5 @@ module.exports = function () {
     .then(() => bind(config, modern))
     .then(() => modern.onStart(config))
     .then(() => modern.onRun(config))
-    .catch(() => modern.onError(config))
+    .catch((err) => modern.onError(err))
 }

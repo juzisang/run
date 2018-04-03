@@ -4,6 +4,7 @@ const log = require('./../../util/log')
 const ModernBase = require('../../core/base/ModernBase')
 const generate = require('./conf/generate')
 const getPort = require('get-port')
+const opn = require('opn')
 
 class VueDev extends ModernBase {
   onBind (config) {
@@ -28,7 +29,8 @@ class VueDev extends ModernBase {
       },
       disableHostCheck: true,
       compress: true,
-      quiet: true
+      quiet: true,
+      proxy: config.vue.proxyTable
     }
     return getPort({port: config.devPort})
       .then((port) => config.devPort = port)
@@ -39,6 +41,9 @@ class VueDev extends ModernBase {
     log.info('----------------------------------')
     log.info(`Server listening at localhost:${config.devPort}`)
     log.info('----------------------------------')
+    if (config.vue.autoOpenBrowser) {
+      opn('http://localhost:' + config.devPort)
+    }
   }
 
   onError (err) {
