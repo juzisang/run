@@ -1,9 +1,8 @@
 const inquirer = require('inquirer')
-const ModernBase = require('../../core/base/ModernBase')
+const ModernBase = require('../../base/ModernBase')
 
 class VueInit extends ModernBase {
   onStart (config) {
-
     let questions = [
       {
         type: 'input',
