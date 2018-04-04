@@ -1,7 +1,7 @@
 const inquirer = require('inquirer')
-const ModernBase = require('../../base/ModernBase')
+const ModernBase = require('../../base/ModernLife')
 
-class VueInit extends ModernBase {
+class VueInit extends ModernLife {
   onStart (config) {
     let questions = [
       {

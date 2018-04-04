@@ -1,4 +1,4 @@
-class ModernBase {
+class ModernLife {
 
   /**
    * 加载需要的依赖
@@ -23,6 +23,13 @@ class ModernBase {
    */
   onError (error) {
   }
+
+  /**
+   * 停止运行
+   */
+  onStop (config) {
+
+  }
 }
 
-module.exports = ModernBase
+module.exports = ModernLife

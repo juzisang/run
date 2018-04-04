@@ -1,10 +1,10 @@
 const shelljs = require('shelljs')
 const log = require('./../../util/log')
-const ModernBase = require('../../base/ModernBase')
+const ModernLife = require('../../base/ModernLife')
 const generate = require('./conf/generate')
 const ora = require('ora')
 
-class VueDev extends ModernBase {
+class VueDev extends ModernLife {
   onBind (config) {
     log.info('loading dependencies')
     shelljs.exec('npm install --loglevel silent', {
