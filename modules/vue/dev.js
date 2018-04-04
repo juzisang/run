@@ -29,12 +29,14 @@ class VueDev extends ModernLife {
       },
       disableHostCheck: true,
       compress: true,
-      quiet: true,
-      proxy: config.vue.proxyTable
+      quiet: true
     }
+
     return getPort({port: config.devPort})
       .then((port) => config.devPort = port)
-      .then(() => new Promise((resolve, reject) => new devServer(compiler, serverConf).listen(config.devPort, '::', (err) => err ? reject(err) : resolve())))
+      .then(() => new Promise((resolve, reject) =>
+        new devServer(compiler, Object.assign({}, serverConf, config.vue.devServer))
+          .listen(config.devPort, '::', (err) => err ? reject(err) : resolve())))
   }
 
   onRun (config) {

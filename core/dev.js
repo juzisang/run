@@ -1,29 +1,43 @@
 const util = require('./../util/util')
 const bind = require('./help/onBind')
+const path = require('path')
 
 module.exports = function () {
-
-  const config = util.getModernConfig()
-  const Module = loadModule(config.type)
-  const modern = new Module()
-
   /**
    * 开始
    */
   function startRun () {
-    return new Promise(resolve => resolve())
+    return new Promise((resolve, reject) => resolve())
+  }
+
+  /**
+   * 获取配置
+   * @param config
+   * @returns {*}
+   */
+  function mergeConfig (config) {
+    return util.getModernConfig(config)
   }
 
   /**
    * 加载模块
    */
-  function loadModule (type) {
-    return require('../modules/' + type).dev
+  function loadModule (config) {
+    const Module = require(path.resolve(__dirname, '../modules', config.type)).dev
+    return {
+      life: new Module(),
+      config: config
+    }
   }
 
   startRun()
-    .then(() => bind(config, modern))
-    .then(() => modern.onStart(config))
-    .then(() => modern.onRun(config))
-    .catch((err) => modern.onError(err))
+    .then(config => mergeConfig(config))
+    .then(config => loadModule(config))
+    .then(({life, config}) => {
+      Promise.resolve()
+        .then(() => bind(config, life))
+        .then(() => life.onStart(config))
+        .then(() => life.onRun(config))
+        .catch((err) => life.onError(err))
+    })
 }

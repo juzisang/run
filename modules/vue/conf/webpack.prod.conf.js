@@ -15,10 +15,10 @@ module.exports = function (modernConf) {
       app: util.cwdPath(modernConf.main)
     },
     output: {
-      path: modernConf.vue.assetsRoot,
-      filename: path.posix.join(modernConf.vue.assetsSubDirectory, 'js/[name].[chunkhash].js'),
-      chunkFilename: path.posix.join(modernConf.vue.assetsSubDirectory, 'js/[id].[chunkhash].js'),
-      publicPath: modernConf.vue.assetsPublicPath
+      path: util.cwdPath(modernConf.vue.outputDir),
+      filename: path.posix.join('static', 'js/[name].[chunkhash].js'),
+      chunkFilename: path.posix.join('static', 'js/[id].[chunkhash].js'),
+      publicPath: modernConf.vue.baseUrl
     },
     devtool: modernConf.vue.devtool,
     plugins: [
@@ -37,7 +37,7 @@ module.exports = function (modernConf) {
         parallel: true
       }),
       new ExtractTextPlugin({
-        filename: path.posix.join(modernConf.vue.assetsSubDirectory, 'css/[name].[contenthash].css'),
+        filename: path.posix.join('static', 'css/[name].[contenthash].css'),
         allChunks: true,
       }),
       new OptimizeCSSPlugin({
@@ -85,7 +85,7 @@ module.exports = function (modernConf) {
       new CopyWebpackPlugin([
         {
           from: util.cwdPath('./static'),
-          to: modernConf.vue.assetsSubDirectory,
+          to: 'static',
           ignore: ['.*']
         }
       ])

@@ -12,7 +12,7 @@ module.exports = function (modernConf) {
       app: util.cwdPath(modernConf.main)
     }),
     output: {
-      publicPath: modernConf.vue.assetsPublicPath
+      // publicPath: '/'
     },
     devtool: modernConf.vue.devtool,
     plugins: [

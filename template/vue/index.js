@@ -8,7 +8,7 @@ class VueInit extends ModernLife {
         type: 'input',
         name: 'name',
         message: 'Project name：',
-        default: ''
+        default: process
       },
       {
         type: 'input',

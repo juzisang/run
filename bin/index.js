@@ -6,7 +6,7 @@ function exec (command, ...args) {
 }
 
 cmd.version(require('../package.json').version, '-v, --version')
-  .usage('development tool')
+  .usage('modern-cli')
 
 cmd.command('init')
   .description('run init')

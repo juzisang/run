@@ -4,33 +4,64 @@ const path = require('path')
 const bind = require('./help/onBind')
 
 module.exports = function (arge) {
-  const config = util.getModernConfig()
-  const Module = loadModule(arge[0])
-  const modern = new Module()
-
   /**
    * 开始
    */
   function startRun () {
-    return new Promise(resolve => resolve())
+    return new Promise((resolve, reject) => resolve())
   }
 
   /**
-   * 加载模块
+   * 验证参数
    */
-  function loadModule (type) {
+  function validate () {
+    const type = arge[0]
+    const name = arge[1]
+
     if (!type || (typeof type) !== 'string') {
       throw new Error('template does not exist')
     }
     if (!fs.readdirSync(path.resolve(__dirname, '../template')).find(name => name === type)) {
       throw new Error(type + ' template does not exist')
     }
-    return require(path.resolve(__dirname, '../template', type))
+    if (typeof name !== 'string') {
+      throw new Error('please enter a name')
+    }
+    return {
+      type,
+      name
+    }
+  }
+
+  /**
+   * 获取配置
+   * @param config
+   * @returns {*}
+   */
+  function mergeConfig (config) {
+    return util.getModernConfig(config)
+  }
+
+  /**
+   * 加载模块
+   */
+  function loadModule (config) {
+    const Module = require(path.resolve(__dirname, '../template', config.type))
+    return {
+      life: new Module(),
+      config: config
+    }
   }
 
   startRun()
-    .then(() => bind(config, modern))
-    .then(() => modern.onStart(config))
-    .then(() => modern.onRun(config))
-    .catch((err) => modern.onError(err))
+    .then(() => validate())
+    .then(config => mergeConfig(config))
+    .then(config => loadModule(config))
+    .then(({life, config}) => {
+      Promise.resolve()
+        .then(() => bind(config, life))
+        .then(() => life.onStart(config))
+        .then(() => life.onRun(config))
+        .catch((err) => life.onError(err))
+    })
 }

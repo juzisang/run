@@ -3,7 +3,7 @@ const fs = require('fs')
 const path = require('path')
 
 module.exports = function (config, modern) {
-  const packageConfig = require('../package.json')
+  const packageConfig = require('../../package.json')
   const cacheFile = path.resolve(__dirname, '../cache.config.json')
   if (fs.existsSync(cacheFile)) {
     const cacheConfig = require(cacheFile)
