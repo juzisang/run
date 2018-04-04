@@ -1,7 +1,5 @@
 const util = require('./../util/util')
-const fs = require('fs')
-const path = require('path')
-const bind = require('./onBind')
+const bind = require('./help/onBind')
 
 module.exports = function () {
 

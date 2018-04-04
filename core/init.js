@@ -1,7 +1,7 @@
 const util = require('./../util/util')
 const fs = require('fs')
 const path = require('path')
-const bind = require('./onBind')
+const bind = require('./help/onBind')
 
 module.exports = function (arge) {
   const config = util.getModernConfig()
@@ -25,7 +25,7 @@ module.exports = function (arge) {
     if (!fs.readdirSync(path.resolve(__dirname, '../template')).find(name => name === type)) {
       throw new Error(type + ' template does not exist')
     }
-    return require('../template/' + type)
+    return require(path.resolve(__dirname, '../template', type))
   }
 
   startRun()

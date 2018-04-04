@@ -38,9 +38,9 @@ class VueDev extends ModernLife {
   }
 
   onRun (config) {
-    log.info('----------------------------------')
-    log.info(`Server listening at localhost:${config.devPort}`)
-    log.info('----------------------------------')
+    // log.info('----------------------------------')
+    // log.info(`Server listening at localhost:${config.devPort}`)
+    // log.info('----------------------------------')
     if (config.vue.autoOpenBrowser) {
       opn('http://localhost:' + config.devPort)
     }
