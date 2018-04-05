@@ -9,6 +9,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const utils = require('./utils')
 
 module.exports = function (modernConf) {
   return merge(baseWebpackConfig(modernConf), {
@@ -22,6 +23,13 @@ module.exports = function (modernConf) {
       publicPath: modernConf.vue.baseUrl
     },
     devtool: modernConf.vue.devtool,
+    module: {
+      rules: utils.styleLoaders({
+        sourceMap: modernConf.vue.sourceMap,
+        extract: true,
+        usePostCSS: true
+      })
+    },
     plugins: [
       new webpack.DefinePlugin({
         'process.env': {
@@ -52,10 +60,7 @@ module.exports = function (modernConf) {
           removeComments: true,
           collapseWhitespace: true,
           removeAttributeQuotes: true
-          // more options:
-          // https://github.com/kangax/html-minifier#options-quick-reference
         },
-        // necessary to consistently work with multiple chunks via CommonsChunkPlugin
         chunksSortMode: 'dependency'
       }),
       new webpack.HashedModuleIdsPlugin(),
@@ -63,14 +68,12 @@ module.exports = function (modernConf) {
       new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
         minChunks (module) {
-          // any required modules inside node_modules are extracted to vendor
-          if (module.resource) {
-            console.log(module.resource, ':', module.resource.includes(util.cwdPath('./node_modules')))
-          }
           return (
             module.resource &&
             /\.js$/.test(module.resource) &&
-            module.resource.includes(util.cwdPath('./node_modules'))
+            module.resource.indexOf(
+              util.cwdPath('./node_modules')
+            ) === 0
           )
         }
       }),

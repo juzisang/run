@@ -5,7 +5,7 @@ module.exports = {
   baseUrl: '/',
   outputDir: 'dist',
   // devtool
-  devtool: 'cheap-module-eval-source-map',
+  devtool: '#source-map',
   // open Browser
   autoOpenBrowser: false,
   // Source Maps

@@ -17,7 +17,7 @@ module.exports = function (config, modern) {
   // 版本没有变
   if (newVersion === oldVersion || compare(newVersion, oldVersion) === -1) {
     // 没有node_modules
-    if (checkModules(config.type)) {
+    if (!checkModules(config.type)) {
       modern.onBind(config)
     }
     return
