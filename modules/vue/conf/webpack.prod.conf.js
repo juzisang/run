@@ -10,7 +10,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 
 module.exports = function (modernConf) {
-  return merge(baseWebpackConfig, {
+  return merge(baseWebpackConfig(modernConf), {
     entry: {
       app: util.cwdPath(modernConf.main)
     },
@@ -63,12 +63,13 @@ module.exports = function (modernConf) {
         name: 'vendor',
         minChunks (module) {
           // any required modules inside node_modules are extracted to vendor
+          if (module.resource) {
+            console.log(module.resource, ':',module.resource.includes(util.cwdPath('./node_modules')))
+          }
           return (
             module.resource &&
             /\.js$/.test(module.resource) &&
-            module.resource.indexOf(
-              util.cwdPath('./node_modules')
-            ) === 0
+            module.resource.includes(util.cwdPath('./node_modules'))
           )
         }
       }),

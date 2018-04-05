@@ -7,6 +7,7 @@ module.exports = function () {
    * 开始
    */
   function startRun () {
+    process.env.NODE_ENV = 'development'
     return new Promise((resolve, reject) => resolve())
   }
 

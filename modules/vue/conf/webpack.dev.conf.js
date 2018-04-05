@@ -7,12 +7,12 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 module.exports = function (modernConf) {
-  return merge(baseWebpackConfig, {
+  return merge(baseWebpackConfig(modernConf), {
     entry: util.parseEntry(modernConf, {
       app: util.cwdPath(modernConf.main)
     }),
     output: {
-      // publicPath: '/'
+      publicPath: '/'
     },
     devtool: modernConf.vue.devtool,
     plugins: [
