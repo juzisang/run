@@ -2,7 +2,6 @@ const shelljs = require('shelljs')
 const log = require('./../../util/log')
 const ModernLife = require('../../base/ModernLife')
 const generate = require('./conf/generate')
-const ora = require('ora')
 
 class VueDev extends ModernLife {
   onBind (config) {
@@ -14,6 +13,7 @@ class VueDev extends ModernLife {
   }
 
   onStart (config) {
+    const ora = require('ora')
     const webpack = require('webpack')
     const compiler = webpack(generate(config, false))
     const spinner = ora('building for production...')

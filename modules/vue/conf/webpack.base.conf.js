@@ -28,7 +28,7 @@ module.exports = function (config) {
       filename: '[name].bundle.js'
     },
     resolve: {
-      extensions: ['.js', '.vue', '.json', '.jsx'],
+      extensions: ['.js', '.vue', '.json'],
       alias: {
         'vue$': 'vue/dist/vue.esm.js',
         '@': cwdPath('src')
@@ -67,12 +67,14 @@ module.exports = function (config) {
         {
           test: /\.vue$/,
           loader: 'vue-loader',
+          exclude: /node_modules/,
           options: vueLoaderConfig(config.vue.sourceMap)
         },
         {
           test: /\.js$/,
           loader: 'babel-loader',
-          include: [util.cwdPath('src'), util.cwdPath('test'), util.cwdPath('node_modules/webpack-dev-server/client')],
+          exclude: /node_modules/,
+          // include: [util.cwdPath('src'), util.cwdPath('test'), util.cwdPath('node_modules/webpack-dev-server/client')],
           options: babelOptions
         },
       ]

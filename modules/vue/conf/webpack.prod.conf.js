@@ -8,6 +8,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = function (modernConf) {
   return merge(baseWebpackConfig(modernConf), {
@@ -24,7 +25,7 @@ module.exports = function (modernConf) {
     plugins: [
       new webpack.DefinePlugin({
         'process.env': {
-          NODE_ENV: '"production"'
+          NODE_ENV: JSON.stringify('production')
         }
       }),
       new UglifyJsPlugin({
@@ -64,7 +65,7 @@ module.exports = function (modernConf) {
         minChunks (module) {
           // any required modules inside node_modules are extracted to vendor
           if (module.resource) {
-            console.log(module.resource, ':',module.resource.includes(util.cwdPath('./node_modules')))
+            console.log(module.resource, ':', module.resource.includes(util.cwdPath('./node_modules')))
           }
           return (
             module.resource &&
@@ -89,7 +90,8 @@ module.exports = function (modernConf) {
           to: 'static',
           ignore: ['.*']
         }
-      ])
+      ]),
+      new BundleAnalyzerPlugin()
     ]
   })
 }

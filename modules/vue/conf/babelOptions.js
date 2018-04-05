@@ -15,7 +15,7 @@ module.exports = function () {
       // moduleLoader('babel-plugin-syntax-dynamic-import'),
       // moduleLoader('babel-plugin-transform-object-rest-spread')
     ],
-    cacheDirectory: true
+    cacheDirectory: false
   }
   return babelConfig
 }

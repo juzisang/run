@@ -4,7 +4,6 @@ const log = require('./../../util/log')
 const ModernLife = require('../../base/ModernLife')
 const generate = require('./conf/generate')
 const getPort = require('get-port')
-const opn = require('opn')
 
 class VueDev extends ModernLife {
   onBind (config) {
@@ -43,6 +42,7 @@ class VueDev extends ModernLife {
     // log.info('----------------------------------')
     // log.info(`Server listening at localhost:${config.devPort}`)
     // log.info('----------------------------------')
+    const opn = require('opn')
     if (config.vue.autoOpenBrowser) {
       opn('http://localhost:' + config.devPort)
     }
