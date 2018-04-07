@@ -1,8 +1,8 @@
 {
   "name": "run-cli",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "run dev",
-  "main": "core/index.js",
+  "main": "index.js",
   "bin": {
     "modern": "bin/index.js"
   },
@@ -12,17 +12,5 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "colors": "^1.2.1",
-    "commander": "^2.15.1",
-    "compareversion": "^1.1.0",
-    "cross-spawn": "^6.0.5",
-    "fs-extra": "^5.0.0",
-    "get-port": "^3.2.0",
-    "handlebars": "^4.0.11",
-    "inquirer": "^5.2.0",
-    "metalsmith": "^2.3.0",
-    "object-assign-deep": "^0.3.1",
-    "shelljs": "^0.8.1",
-    "webpack-chain": "^4.5.0"
   }
 }
