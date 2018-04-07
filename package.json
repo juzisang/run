@@ -1,7 +1,7 @@
 {
-  "name": "modern-cli",
+  "name": "run-cli",
   "version": "0.0.2",
-  "description": "",
+  "description": "run dev",
   "main": "core/index.js",
   "bin": {
     "modern": "bin/index.js"
@@ -22,6 +22,7 @@
     "inquirer": "^5.2.0",
     "metalsmith": "^2.3.0",
     "object-assign-deep": "^0.3.1",
-    "shelljs": "^0.8.1"
+    "shelljs": "^0.8.1",
+    "webpack-chain": "^4.5.0"
   }
 }
